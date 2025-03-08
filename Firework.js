@@ -91,11 +91,19 @@ Firework.prototype.CheckLife = function () {
 
 //---------------------
 
-function CreateFirework() {
-    let sx = random(width * 0.1, width * 0.9);
-    let sy = height;
+function CreateFirework(x, y) {
+    let sx = x;
+    let sy = y;
     let ex = sx;
     let ey = random(height * 0.1, height * 3 / 4);
 
     fireworks.push(new Firework(sx, sy, ex, ey, random(0, 360)));
 }
+
+// 假設這裡有一個處理點擊事件的函數
+canvas.addEventListener('click', function(event) {
+    let rect = canvas.getBoundingClientRect();
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
+    CreateFirework(x, y);
+});

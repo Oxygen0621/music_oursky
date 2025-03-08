@@ -1,3 +1,18 @@
+function setCanvasSize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+// 在頁面加載時設置畫布大小
+window.addEventListener('load', function() {
+    setCanvasSize();
+});
+
+// 在窗口大小改變時重新設置畫布大小
+window.addEventListener('resize', function() {
+    setCanvasSize();
+});
+
 function Firework(x, y, tx, ty, color) {
     this.name = 'Firework';
     this.pos = new Vector(x, y);

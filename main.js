@@ -12,6 +12,8 @@ var ctx_font = "Arial",
     ctx_backColor = "#222";
 var keys = {}, mousePos = {};
 var isStarted = false;
+var background = new Image();
+background.src = 'oursky_mac.png';
 
 window.onload = function () {
     ctx = CreateDisplay("myCanvas");
@@ -77,7 +79,7 @@ function update(dt) {
     if (height > width) {
         chance = 10;
     }else{
-        chance = 80;
+        chance = 40;
     }
     if (random(0, 1000) < chance) {
         let x = random(0, width);
@@ -120,12 +122,23 @@ function draw(ctx) {
 }
 
 function drawBackground(ctx) {
-    // 使用漸層黑色和深藍色背景
-    let gradient = ctx.createLinearGradient(0, 0, 0, height);
-    gradient.addColorStop(0, "#000022");
-    gradient.addColorStop(1, "#000000");
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
+    let aspectRatio = background.width / background.height;
+    let canvasAspectRatio = width / height;
+    let drawWidth, drawHeight, offsetX, offsetY;
+
+    if (canvasAspectRatio > aspectRatio) {
+        drawWidth = width;
+        drawHeight = width / aspectRatio;
+        offsetX = 0;
+        offsetY = (height - drawHeight) / 2;
+    } else {
+        drawWidth = height * aspectRatio;
+        drawHeight = height;
+        offsetX = (width - drawWidth) / 2;
+        offsetY = 0;
+    }
+
+    ctx.drawImage(background, offsetX, offsetY, drawWidth, drawHeight);
 }
 
 function drawString(ctx, text, x, y, color, fontSize, font, alignX, alignY, baseline) {

@@ -15,7 +15,7 @@ window.addEventListener('load', function() {
         canvas.addEventListener('click', function(event) {
             let rect = canvas.getBoundingClientRect();
             let x = event.clientX - rect.left;
-            let y = event.clientY - rect.top;
+            let y = event.clientX - rect.top;
             CreateFirework(x, y);
         });
     }

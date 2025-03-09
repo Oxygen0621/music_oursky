@@ -20,12 +20,26 @@ body {
 }
 
 .record {
+    position: relative; /* 確保偽元素相對於父元素定位 */
     width: 200px;
     height: 200px;
     border-radius: 50%;
     overflow: hidden;
     animation: spin 5s linear infinite;
     animation-play-state: paused;
+}
+
+.record::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 27px; /* 孔洞的直徑 */
+    height: 27px; /* 孔洞的直徑 */
+    background: #000; /* 孔洞的顏色 */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1; /* 確保孔洞在圖片上方 */
 }
 
 .record-image {
@@ -124,4 +138,28 @@ body {
 
 .music-source a:hover {
     text-decoration: underline;
+}
+
+.record-needle {
+    position: absolute;
+    top: -17%;
+    left: 65%; /* 更貼近唱片機 */
+    width: 20%; /* 調整大小為原來的20%（放大兩倍） */
+    transform-origin: 50% 10%; /* 設置旋轉中心為長端的邊邊 */
+    transform: rotate(-30deg); /* 旋轉約30度 */
+    transition: transform 0.5s;
+}
+
+.record-needle.active {
+    transform: rotate(-10deg); /* 旋轉回到0度 */
+}
+
+
+.music-subtitle {
+    position: absolute;
+    bottom: -50%; /* 調整位置 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160%; /* 縮小到 30% */
+    pointer-events: none; /* 不影響畫面的其他物件 */
 }

@@ -12,10 +12,12 @@
         <div class="record">
             <img src="night.jpg" alt="唱片" class="record-image">
         </div>
-        <audio id="audio-player">
+        <img src="arrow.png" alt="指針" class="record-needle" id="record-needle">
+        <audio id="audio-player" >
             <source src="yihuik苡慧 - 銀河與星斗高音質動態歌詞Lyrics晚風依舊很溫柔一個人慢慢走.mp3" type="audio/mp3">
             您的瀏覽器不支援 audio 元素。
         </audio>
+        <img src="subtitle.png" alt="歌名與歌詞" class="music-subtitle" id="music-subtitle">
     </div>
     <div class="music-source">
         <a href="https://www.youtube.com/watch?v=_RkqB_efI2o" target="_blank">音樂來源</a>
@@ -29,6 +31,7 @@
             const audioPlayer = document.getElementById('audio-player');
             audioPlayer.play();
             document.querySelector('.record').style.animationPlayState = 'running';
+            document.getElementById('record-needle').classList.add('active');
         });
     </script>
 </body>

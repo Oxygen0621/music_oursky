@@ -59,11 +59,7 @@ Particle.prototype.render = function (ctx) {
 
     let color = 'hsla(' + this.hue + ',' + this.saturation + '%, ' + this.lightness + '%, ' + this.alpha + ')';
     let randomTail = this.tail[randomInt(0, this.tail.length - 1)];
-    /*
-    FillCircle(ctx, this.pos.x, this.pos.y, this.radius, color);
 
-    FillCircle(ctx, randomTail.x, randomTail.y, this.radius, color);
-    */
     DrawLine(ctx, randomTail, this.pos, this.radius, color);
 
 

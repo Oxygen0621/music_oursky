@@ -1,16 +1,30 @@
-function setCanvasSize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+function setCanvasSize(canvas) {
+    if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
 }
 
 // 在頁面加載時設置畫布大小
 window.addEventListener('load', function() {
-    setCanvasSize();
+    const canvas = document.getElementById('myCanvas');
+    setCanvasSize(canvas);
+
+    // 假設這裡有一個處理點擊事件的函數
+    if (canvas) {
+        canvas.addEventListener('click', function(event) {
+            let rect = canvas.getBoundingClientRect();
+            let x = event.clientX - rect.left;
+            let y = event.clientY - rect.top;
+            CreateFirework(x, y);
+        });
+    }
 });
 
 // 在窗口大小改變時重新設置畫布大小
 window.addEventListener('resize', function() {
-    setCanvasSize();
+    const canvas = document.getElementById('myCanvas');
+    setCanvasSize(canvas);
 });
 
 function Firework(x, y, tx, ty, color) {
@@ -36,7 +50,7 @@ function Firework(x, y, tx, ty, color) {
         new Vector(x, y)
     ];
 
-    this.radius = 2;
+    this.radius = 1.5;
 
     this.showTarget = false;
     this.target = new Vector(tx, ty);
@@ -114,11 +128,3 @@ function CreateFirework(x, y) {
 
     fireworks.push(new Firework(sx, sy, ex, ey, random(0, 360)));
 }
-
-// 假設這裡有一個處理點擊事件的函數
-canvas.addEventListener('click', function(event) {
-    let rect = canvas.getBoundingClientRect();
-    let x = event.clientX - rect.left;
-    let y = event.clientY - rect.top;
-    CreateFirework(x, y);
-});

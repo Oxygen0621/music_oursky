@@ -1,4 +1,5 @@
 var ctx,
+    canvas,
     width,
     height;
 var animation,
@@ -10,10 +11,13 @@ var ctx_font = "Arial",
     ctx_fontsize = 10,
     ctx_backColor = "#222";
 var keys = {}, mousePos = {};
+var isStarted = false;
 
 window.onload = function () {
     ctx = CreateDisplay("myCanvas");
-    width = ctx.canvas.width; height = ctx.canvas.height;
+    canvas = ctx.canvas;
+    width = canvas.width;
+    height = canvas.height;
 
     document.addEventListener("keydown", keydown, false);
     document.addEventListener("keyup", keyup, false);
@@ -35,12 +39,14 @@ function mainLoop(timestamp) {
     ctx.fillRect(0, 0, width, height);
     //--------Begin-----------
 
-    update(DeltaTime);
+    if (isStarted) {
+        update(DeltaTime);
+    }
     draw(ctx);
 
     //--------End---------------
     let str1 = "Fps: " + Math.round(1000 / Timesub), str2 = "Timesub: " + Math.round(Timesub), str3 = "DeltaTime: " + Math.round(DeltaTime);
-    drawString(ctx, str1 + "\n" + str2 + "\n" + str3,
+    drawString(ctx, str1,
         0, height - 31,
         "rgba(255,255,255,0.3)", 10, "Arial",
         0, 0, 0);
@@ -67,8 +73,16 @@ function main() {
 }
 
 function update(dt) {
-    if (random(0, 1000) < 5) {
-        CreateFirework();
+    var chance;
+    if (height > width) {
+        chance = 10;
+    }else{
+        chance = 80;
+    }
+    if (random(0, 1000) < chance) {
+        let x = random(0, width);
+        let y = height;
+        CreateFirework(x, y);
     }
 
     for (particle of particles) {
@@ -77,7 +91,7 @@ function update(dt) {
     }
 
     for (firework of fireworks) {
-        //firework.applyForce(gravity);
+        firework.applyForce(gravity);
         firework.update(dt);
     }
 
@@ -142,6 +156,7 @@ function mousedown(e) {
     let ex = sx;
     let ey = random(height * 0.1, height * 3 / 4);
     fireworks.push(new Firework(sx, sy, ex, ey, random(0, 360)));
+    isStarted = true; // 開始更新
 }
 
 function mouseup(e) {
@@ -154,8 +169,9 @@ function mousemove(e) {
 }
 
 function resize() {
-    width = ctx.canvas.width = window.innerWidth;
-    height = ctx.canvas.height = window.innerHeight;
+    setCanvasSize(canvas);
+    width = canvas.width;
+    height = canvas.height;
 }
 
 //----tool-------
@@ -196,3 +212,10 @@ function CreateDisplay(id, width, height, border) {
 
     return canvas.getContext("2d");
 }
+
+document.addEventListener('click', function() {
+    const audioPlayer = document.getElementById('audio-player');
+    audioPlayer.play();
+    document.querySelector('.record').style.animationPlayState = 'running';
+    isStarted = true; // 開始更新
+});

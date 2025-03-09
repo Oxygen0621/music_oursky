@@ -138,6 +138,7 @@ function drawBackground(ctx) {
         offsetY = 0;
     }
 
+    ctx.clearRect(0, 0, width, height); // 清除畫布
     ctx.drawImage(background, offsetX, offsetY, drawWidth, drawHeight);
 }
 

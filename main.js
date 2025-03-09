@@ -183,9 +183,11 @@ function mousemove(e) {
 }
 
 function resize() {
+    const canvas = document.getElementById('myCanvas');
     setCanvasSize(canvas);
     width = canvas.width;
     height = canvas.height;
+    drawBackground(ctx); // 確保在調整大小後重新繪製背景
 }
 
 //----tool-------

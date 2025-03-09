@@ -25,6 +25,7 @@ window.addEventListener('load', function() {
 window.addEventListener('resize', function() {
     const canvas = document.getElementById('myCanvas');
     setCanvasSize(canvas);
+    drawBackground(canvas.getContext('2d')); // 確保在調整大小後重新繪製背景
 });
 
 function Firework(x, y, tx, ty, color) {
